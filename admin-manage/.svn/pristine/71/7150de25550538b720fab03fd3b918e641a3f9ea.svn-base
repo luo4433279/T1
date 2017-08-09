@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--加载公共css  -->
+<link href="/admin/css/plugins/jsTree/style.min.css" rel="stylesheet" />
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+	    <!--你的内容，多行用多个row  -->
+		<div class="row">
+			<div class="col-xs-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div id="departmentTree"></div>
+                    </div>
+                </div>
+        </div>
+			</div>
+		</div>
+		
+	<!--加载公共js  -->
+
+	<script src="/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/admin/js/plugins/jsTree/jstree.min.js"></script>
+    <script src="/admin/js/plugins/jsTree/jstree.checkbox.js"></script>
+    <script th:inline="javascript">
+		/*<![CDATA[*/
+		    var array = /*[[${list}]]*/ 'array';
+		/*]]>*/
+		
+	    var treeObject = null;
+		var callbackdata = function () {
+		    var nodeId=treeObject.jstree("get_checked"); //使用get_checked方法 
+		    var nodeText=treeObject.jstree("get_node",nodeId).text;
+	        return {'nodeId':nodeId,'nodeText':nodeText};
+	    }
+		
+		$(function() {//打开页面执行的方法
+            treeObject = $('#departmentTree').jstree({
+                'core': {
+                	"multiple": false,
+                    'data': eval("("+array+")")
+                },
+    	        "checkbox":{
+    	        	"keep_selected_style":true,
+    	        	'three_state' : false, 
+    	        	"tie_selection":true,
+    	        	"cascade": 'undetermined',
+    	        },
+    	        "plugins":["wholerow","checkbox","search"],
+            });
+		});
+	</script>
+
+</body>
+</html>

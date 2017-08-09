@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="basicUrl=@{/}">
+<head>
+<!--加载公共css  -->
+<div th:replace="head"></div>
+<!-- DataTables -->
+<link rel="stylesheet"
+	th:href="${basicUrl}+@{js/plugins/datatables/dataTables.bootstrap.css}" />
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<!--你的内容，多行用多个row  -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+
+					<div class="box-header" style="padding-bottom: 0px">
+					
+											<div class="col-md-12">
+							<div class="col-md-12">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">操作模块</label>
+										<div class="col-sm-8">
+											<select id="module"
+												class="form-control selectpicker bs-select-hidden m-b-xs"
+												onchange="moduleChange();">
+												<option value='' selected='selected'></option>
+												<option th:each="item:${moduleList}" th:value="${item}"
+													th:text="${item}">操作模块</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">操作内容</label>
+										<div class="col-sm-6">
+											<input type="text" name="methods" 
+												class="form-control m-b-xs" id="methods" placeholder=""
+												maxlength="100" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label m-b-xs">开始日期</label>
+										<div class="col-sm-8">
+											<input placeholder="开始日期" class="form-control layer-date m-b-xs"
+												id="fromDt" />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-5">
+								<div class="form-group">
+									<label class="col-sm-4 control-label m-b-xs">结束日期</label>
+									<div class="col-sm-6">
+										<input placeholder="结束日期" class="form-control layer-date m-b-xs"
+											id="toDt" />
+									</div>
+									<div class="col-sm-2">
+									<button type="button" class="btn btn-primary" id="search"
+											onclick="loadTable(1)">
+											<span class="glyphicon glyphicon-search" />&nbsp;查&nbsp;&nbsp;询
+										</button>
+									</div>	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="box-body">
+						<table id="dataTable" class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th width="10%">帐号</th>
+									<th width="20%">操作模块</th>
+									<th width="20%">操作内容</th>
+									<th width="35%">操作结果</th>
+									<th width="15%">时间</th>
+								</tr>
+							</thead>
+							<!-- <tbody>
+								<tr th:each="item:${list}">
+									<td th:text="${item.user}">id</td>
+									<td th:text="${item.module}">module</td>
+									<td th:text="${item.methods}">methods</td>
+									<td th:text="${item.statusDesc}">statusDesc</td>
+									<td
+										th:text="${#dates.format(item.createTime,'yyyy/MM/dd HH:mm')}">status</td>
+								</tr>
+							</tbody> -->
+						</table>
+					</div>
+					<!-- /.box-body -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--加载公共js  -->
+	<div th:replace="script"></div>
+	<script>
+		var loadTable = function(flg) {
+			var url = "/admin/syslog/search";
+			if (flg==1){
+					var module = $("#module").children("option:selected").val() + "";
+					var methods = $("#methods").val();
+					var fromDt = $("#fromDt").val();
+					var toDt = $("#toDt").val();
+					/*<![CDATA[*/
+					if (fromDt!="" && toDt!="" && fromDt>toDt){
+						layer.alert('日期错误，结束日期必须大于开始日期', {
+								  icon: 2,
+								  title: '出错了！',
+								  skin: 'layer-ext-moon' 
+								});
+						return;
+					}
+					/*]]>*/
+					var params = "";
+					var i = 0;
+					var preFix = "";
+					/*<![CDATA[*/
+					var data=[{"fromDt":fromDt,"toDt":toDt,"module":module,"methods":methods}]
+					if (fromDt){
+						if (i>0){
+							preFix = "&";
+						}
+						params = params + preFix+"fromDt="+fromDt;
+						i++;
+					}
+					if (toDt){
+						if (i>0){
+							preFix = "&";
+						}
+						params = params + preFix+"toDt="+toDt;
+						i++;
+					}
+					if (module){
+						if (i>0){
+							preFix = "&";
+						}
+						params = params + preFix+"module="+module;
+						i++;
+					}
+					if (methods){
+						if (i>0){
+							preFix = "&";
+						}
+						params = params + preFix+"methods="+methods;
+						i++;
+					}
+					if (params){
+						url = url + "?"+params;
+					}
+			}
+			/*]]>*/
+			//再次查询时先删除dataTable，如果少了以下语句每次只能查询一次，第二次点击查询就不执行。
+			var table = $('#dataTable').dataTable();
+			if (table) {
+				table.fnDestroy();
+			}
+			
+			$('#dataTable').DataTable({
+				"paging" : true,
+				"lengthChange" : false,
+				"searching" : false,
+				"ordering" :true,
+				"bServerSide" : false,
+				"sDefaultContent": "", 
+				"sAjaxSource" : url,
+				"iDisplayLength" : 10,
+				"sPaginationType" : "full_numbers",
+				"info" : true,
+				"bProcessing" : true, //当datatable获取数据时候是否显示正在处理提示信息。
+				"autoWidth" : false,
+				"aoColumns" : [{
+					"mData" : "user",
+				},{
+					"mData" : "module",
+				},{
+					"mData" : "methods"
+				},{
+					"mData" : "statusDesc"
+				},{
+					"mData" : "createTime",
+					"render": function (data) {
+			            if (data !== null) {
+			                return formatDate(data);
+			            } else {
+			                return "";
+			            }
+			        }
+				} ],
+				"oLanguage" : {
+					"sProcessing" : "正在加载中......",
+					"sLengthMenu" : "每页显示 _MENU_ 条记录",
+					"sZeroRecords" : "对不起，查询不到相关数据！",
+					"sEmptyTable" : "表中无数据存在！",
+					"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+					"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+					"sInfoEmpty": "当前显示 0 到 0 条，共 0 条记录",
+					"sSearch" : "搜索",
+					"oPaginate" : {
+						"sFirst" : "首页",
+						"sPrevious" : "上一页",
+						"sNext" : "下一页",
+						"sLast" : "末页"
+					}
+				} 
+			//多语言配置 
+			});
+			
+		};
+	    var addTitle = function(){
+	    	$("a[class='active J_menuTab']").text($("a[class='active J_menuTab']").text()+'>>新增');
+	    	return true;
+	    } 
+		$(function() {//打开页面执行的方法
+			loadTable();
+			/* $('#dataTable').DataTable({
+				"paging" : true,
+				"lengthChange" : false,
+				"searching" : false,
+				"ordering" : true,
+				"info" : true,
+				"autoWidth" : false,
+				//"order": [[3,"asc"]],
+				"oLanguage" : {
+					"sProcessing" : "正在加载中......",
+					"sLengthMenu" : "每页显示 _MENU_ 条记录",
+					"sZeroRecords" : "对不起，查询不到相关数据！",
+					"sEmptyTable" : "表中无数据存在！",
+					"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+					"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+					"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+					"sSearch" : "搜索",
+					"oPaginate" : {
+						"sFirst" : "首页",
+						"sPrevious" : "上一页",
+						"sNext" : "下一页",
+						"sLast" : "末页"
+					}
+				}
+			//多语言配置 
+			}); */
+		
+			//日期范围限制
+			var start = {
+				elem : '#fromDt',
+				format : 'YYYY-MM-DD',
+				max : '2099-06-16', //最大日期
+				istime : false,
+				istoday : true
+			};
+			var end = {
+				elem : '#toDt',
+				format : 'YYYY-MM-DD',
+				max : '2099-06-16',
+				istime : false,
+				istoday : true
+
+			};
+			laydate(start);
+			laydate(end);
+		});
+	</script>
+	<script th:src="${basicUrl}+@{js/list-page.js}"></script>
+	<!-- DataTables -->
+	<script th:src="${basicUrl}+@{js/plugins/datatables/jquery.dataTables.js}"></script>
+	<script th:src="${basicUrl}+@{js/plugins/datatables/dataTables.bootstrap.js}"></script>
+</body>
+</html>

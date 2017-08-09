@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="basicUrl=@{/}">
+<head>
+<!--加载公共css  -->
+<div th:replace="head"></div>
+<!-- DataTables -->
+<link rel="stylesheet"
+	th:href="${basicUrl}+@{js/plugins/datatables/dataTables.bootstrap.css}" />
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<!--你的内容，多行用多个row  -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+
+					<div class="box-header">
+						<div class="col-md-12">
+							<div class="col-md-12">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">账号名</label>
+										<div class="col-sm-9">
+											<input id="searchUsername" class="form-control m-b-xs" />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">手机</label>
+										<div class="col-sm-9">
+											 <input id="searchPhone" class="form-control m-b-xs" />
+										</div>	
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">部门</label>
+										<div class="col-sm-9">
+											<input id="searchDepartment" class="form-control m-b-xs" />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">状态</label>
+									<div class="col-sm-7">
+										<select id="searchStatus"
+											class="form-control selectpicker bs-select-hidden"
+											style="width: 80px;">
+											<option value="全部" selected="selected">全部</option>
+											<option value="禁用">禁用</option>
+											<option value="启用">启用</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+									<button id="btnSearch" class="btn btn-primary m-b-xs">查询</button>
+									</div>	
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<a th:href="@{/user/form}" class="btn btn-primary ManageBtn userAddBtn m-b-xs">新增用户</a>
+						</div>
+						
+					</div>
+					<div class="box-body">
+						<table id="dataTable" class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>帐号名</th>
+									<th>邮箱</th>
+									<th>座机</th>
+									<th>手机</th>
+									<th>QQ</th>
+									<th>部门</th>
+									<th>创建时间</th>
+									<th>状态</th>
+									<th class="unsortable ManageBtn userSwitchBtn" style="text-align: center">切换状态</th>
+									<th class="unsortable ManageBtn userEditBtn">修改</th>
+									<th class="unsortable ManageBtn userAddRoleBtn" style="text-align: center">分配角色</th>
+									<th class="unsortable ManageBtn userDeleteBtn" style="text-align: center">删除</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="item:${list}">
+									<td th:text="${item.username}"></td>
+									<td th:text="${item.email}">email</td>
+									<td th:text="${item.phone}">phone</td>
+									<td th:text="${item.mobile}">mobile</td>
+									<td th:text="${item.qq}">QQ</td>
+									<td th:text="${item.departName}">departName</td>
+									<td	th:text="${#dates.format(item.createtime,'yyyy/MM/dd HH:mm')}">date</td>
+									<td th:text="${item.disabled}?'禁用':'启用'" id="status">status</td>
+									<td class="ManageBtn userSwitchBtn" style="text-align: center"><span name="lock"
+										title="切换状态"
+										th:data="@{/user/{id}/status(disable=${!item.disabled},id=${item.id})}"
+										style="cursor: pointer" class="glyphicon glyphicon-lock"></span>
+
+									</td>
+									<td class="ManageBtn userEditBtn" style="text-align: center"><a
+										th:href="@{/user/form(id=${item.id})}"><span
+											class="glyphicon glyphicon-edit" title="编辑"></span></a></td>
+									<td  class="ManageBtn userAddRoleBtn" style="text-align: center"><a
+										th:href="@{/user/{id}/select-role(id=${item.id})}"><span
+											style="cursor: pointer" class="glyphicon glyphicon-transfer"
+											title="授权"></span></a></td>
+
+									<td  class="ManageBtn userDeleteBtn" style="text-align: center"><span name="trash"
+										title="删除" th:data="@{/user/{id}/delete(id=${item.id})}"
+										style="cursor: pointer" class="glyphicon glyphicon-trash"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--加载公共js  -->
+	<div th:replace="script"></div>
+
+	<script>
+		$(function() {//打开页面执行的方法
+			
+			alert("33333");
+			var table = $('#dataTable').DataTable({
+				"paging" : true,
+				"lengthChange" : false,
+				"searching" : true,
+				"ordering" : true,
+				"info" : true,
+				"autoWidth" : false,
+				"aoColumnDefs" : [{ "bSortable": false, "aTargets": ['unsortable'] }],
+				"oLanguage" : {
+					"sProcessing" : "正在加载中......",
+					"sLengthMenu" : "每页显示 _MENU_ 条记录",
+					"sZeroRecords" : "对不起，查询不到相关数据！",
+					"sEmptyTable" : "表中无数据存在！",
+					"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+					"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+					"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+					"sSearch" : "搜索",
+					"oPaginate" : {
+						"sFirst" : "首页",
+						"sPrevious" : "上一页",
+						"sNext" : "下一页",
+						"sLast" : "末页"
+					}
+				}
+			//多语言配置 
+			});
+			$("#dataTable_filter").remove();
+		    $("#btnSearch").click(
+			 function () {
+				 var str = "table"
+				 var searchUsername = $("#searchUsername").val();
+		         if (searchUsername){
+		        	 str = str + ".column(0).search('"+searchUsername+"')";
+		         }else{
+		        	 str = str + ".column(0).search('')";
+		         }
+		         var searchPhone = $("#searchPhone").val();
+		         if (searchPhone){
+		        	 str = str + ".column(3).search('"+searchPhone+"')";
+		         }else{
+		        	 str = str + ".column(3).search('')";
+		         }
+		         var searchDepartment = $("#searchDepartment").val();
+		         if (searchDepartment){
+		        	 str = str + ".column(5).search('"+searchDepartment+"')";
+		         }else{
+		        	 str = str + ".column(5).search('')";
+		         }
+		         var searchStatus = $("#searchStatus").val();
+		         if (searchStatus == "全部"){
+		        	 str = str + ".column(7).search('')";
+		         }else{
+			         str = str + ".column(7).search('"+searchStatus+"')";
+		         }
+				 str = str + ".draw()";
+				 eval(str);
+		     });
+		$("th.sorting_disabled").css("padding-right","8px")
+		});
+	</script>
+	<script th:src="${basicUrl}+@{js/list-page.js}"></script>
+	<!-- DataTables -->
+	<script th:src="${basicUrl}+@{js/plugins/datatables/jquery.dataTables.js}"></script>
+	<script th:src="${basicUrl}+@{js/plugins/datatables/dataTables.bootstrap.js}"></script>
+</body>
+</html>

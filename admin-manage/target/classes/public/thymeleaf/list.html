@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--加载公共css  -->
+<div th:replace="head"></div>
+<!-- DataTables -->
+<link rel="stylesheet"
+	href="../js/plugins/datatables/dataTables.bootstrap.css" />
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+	    <!--你的内容，多行用多个row  -->
+		<div class="row">
+			<div class="col-xs-12">
+			                    <div class="box">
+                        <div class="box-header">
+                        </div>
+
+                        <div class="box-body">
+                            <table id="dataTable" class="table table-bordered table-striped">
+                                <thead>
+                               
+                                </thead>
+                                <tbody>
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+			</div>
+		</div>
+	</div>
+	<!--加载公共js  -->
+	<div th:replace="script"></div>
+
+	<script>
+		$(function() {//打开页面执行的方法
+	        $('#dataTable').DataTable({
+	            "paging": true,
+	            "lengthChange": false,
+	            "searching": false,
+	            "ordering": true,
+	            "info": true,
+	            "autoWidth": false,
+				"oLanguage" : {
+					"sProcessing" : "正在加载中......",
+					"sLengthMenu" : "每页显示 _MENU_ 条记录",
+					"sZeroRecords" : "对不起，查询不到相关数据！",
+					"sEmptyTable" : "表中无数据存在！",
+					"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+					"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+					"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+					"sSearch" : "搜索",
+					"oPaginate" : {
+						"sFirst" : "首页",
+						"sPrevious" : "上一页",
+						"sNext" : "下一页",
+						"sLast" : "末页"
+					}
+				}
+			//多语言配置 
+	        });
+		});
+	</script>
+    <script th:src="@{/js/list-page.js}"></script>
+    	<!-- DataTables -->
+	<script th:src="@{/js/plugins/datatables/jquery.dataTables.js}"></script>
+	<script th:src="@{/js/plugins/datatables/dataTables.bootstrap.js}"></script>
+</body>
+</html>

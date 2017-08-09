@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="basicUrl=@{/}">
+<head>
+<title></title>
+<!--加载公共css  -->
+<div th:replace="head"></div>
+
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<!--你的内容，多行用多个row  -->
+		<div class="row">
+			<div class="col-xs-12">
+				<form class="form-horizontal" th:action="@{${api}}"  onsubmit="return formCheck()" method="post">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="inputMenuId" class="col-sm-2 control-label">id</label>
+
+							<div class="col-sm-10">
+								<input type="text" name="id" th:value="${menu}? ${menu.id}"
+									th:readonly="${menu}?true:false" class="form-control"
+									id="inputMenuId" placeholder="" required="required"
+									maxlength="50" onchange="menuCheck();" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">父菜单</label>
+
+							<div class="col-sm-10">
+								<input type="text" name="parentTitle" th:value="${parentTitle}?${parentTitle}:''" class="form-control" readonly="readonly"/>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">标题</label>
+
+							<div class="col-sm-10">
+								<input type="text" name="label"
+									th:value="${menu}? ${menu.label}" class="form-control"
+									id="inputEmail3" placeholder="" required="required"
+									maxlength="30" />
+							</div>
+						</div>
+						<!--<div class="form-group">-->
+						<!--<label for="inputEmail3" class="col-sm-2 control-label">类型</label>-->
+
+						<!--<div class="col-sm-10">-->
+						<!--<input type="text" name="type" class="form-control" id="inputEmail3" placeholder=""-->
+						<!--required="required">-->
+						<!--</div>-->
+						<!--</div>-->
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">url</label>
+
+							<div class="col-sm-10">
+								<input type="text" name="url" th:value="${menu}? ${menu.url}"
+									class="form-control" id="inputEmail3" placeholder=""
+									maxlength="225" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">图标</label>
+
+							<div class="col-sm-10">
+								<input type="text" name="style" th:value="${menu}? ${menu.style}"
+									class="form-control" id="inputstyle" placeholder=""
+									maxlength="225" />
+							</div>
+						</div>
+						<div class="form-group">
+						    <label for="inputEmail3" class="col-sm-2 control-label"></label>
+						   	<div class="col-sm-10">
+                           		<p><i class="fa fa-send-o"></i>一级菜单才需要添加图标，请从此网址选择图标，copy到上面的文本框中：<a href="http://v3.bootcss.com/components/" target="_blank">http://v3.bootcss.com/components/</a></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">排序</label>
+
+							<div class="col-sm-10">
+								<input type="number" name="viewOrder"
+									th:value="${menu}? ${menu.viewOrder} : 10" class="form-control"
+									id="inputEmail3" placeholder="" />
+								<input type="hidden" name="path"
+									th:value="${menu}? ${menu.path} : (${parentPath} ? ${parentPath} :0)" />
+							</div>
+						</div>
+
+						<br />
+						<br />
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer" style="text-align: center;">
+
+						<button type="submit" class="btn btn-info">提交</button>
+						<button type="button" class="btn btn-info"
+							onclick="history.go(-1)">返回</button>
+					</div>
+					<!-- /.box-footer -->
+				</form>
+			</div>
+		</div>
+	</div>
+	<input id="addFlg" type="hidden" th:value="${menu}?1:0"/>
+	<input id="checkFlg" type="hidden" value="false"/>
+	<!--加载公共js  -->
+	<div th:replace="script"></div>
+
+	<script>
+	    var formCheck= function(){
+	    	if($("input[name=path]").val()!="0") {
+	    		if ($("input[name=url]").val()=="" || $("input[name=url]").val()==null){
+	    			layer.alert("请输入访问地址!", {
+						icon : 2,
+						title : '出错了！',
+						skin : 'layer-ext-moon'
+					});
+			    	return false;
+	    		}
+	    	}
+	    	$("#checkFlg").val("false");
+	    	menuCheck();
+	    	var checkFlg = $("#checkFlg").val();
+	    	if (checkFlg=="false"){
+	    		return false;
+	    	}
+	    	return true;
+	    }
+	    	    
+	    var menuCheck = function(){
+	    	var addFlg = $("#addFlg").val();//新增还是修改 addFlg =0 新增  addFlg =1 修改
+	    	if (addFlg == "1"){
+	    		$("#checkFlg").val("true");
+	    		return;//修改时不需检查
+	    	}
+	    	var menuId = $("#inputMenuId").val();
+	    	if (!menuId){
+	    		layer.alert("请输入菜单id!", {
+						icon : 2,
+						title : '出错了！',
+						skin : 'layer-ext-moon'
+				   });
+	    		$("#checkFlg").val("false");
+	    		return;
+	    	}
+	    	var url = "/admin/menu/"+menuId;
+	    	$.ajax({
+				type : "GET",
+				url : url,
+				async: false,
+				success : function(data) {
+                   if (data.result == 'true'){
+                	   layer.alert("菜单id已存在!", {
+	   						icon : 2,
+	   						title : '出错了！',
+	   						skin : 'layer-ext-moon'
+   					   });
+                	   $("#inputMenuId").val("");
+                	   $("#checkFlg").val("false");
+                       return;   
+                   }
+                   $("#checkFlg").val("true");
+                   return;
+				}
+			});
+	    }
+		$(function() {//打开页面执行的方法
+			$("a[class='active J_menuTab']").text($("a[class='active J_menuTab']").text()+'>>新增');
+			if($("input[name=path]").val()!="0"){
+				$("input[name=style]").attr("readonly","readonly");
+			}else{
+				$("input[name=url]").attr("readonly","readonly");
+			}
+		});
+	</script>
+
+</body>
+</html>

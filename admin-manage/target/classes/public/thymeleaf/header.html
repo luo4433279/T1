@@ -1,0 +1,39 @@
+<header class="main-header">
+    
+    <!-- Logo -->
+    <a th:href="@{/}" class="logo">
+        <span class="logo-mini">微信后台综合管理系统</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">微信后台综合管理系统</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a th:href="@{/user/profile}">
+                        <span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;<span th:text="${user}?${user.username}"></span>
+                    </a>
+
+                </li>
+                <li class="dropdown user user-menu">
+	                <a id = "logout" href="javascript:void(0)" onclick="logoutFun();">
+	                    <span class="glyphicon glyphicon-remove"></span>
+	                	<span>退出</span>
+	                </a>    
+                </li>
+                
+
+            </ul>
+        </div>
+
+    </nav>
+</header>
+

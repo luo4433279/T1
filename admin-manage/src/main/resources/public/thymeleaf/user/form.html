@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="basicUrl=@{/}">
+<head>
+<!--加载公共css  -->
+<div th:replace="head"></div>
+
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+	    <!--你的内容，多行用多个row  -->
+		<div class="row">
+			<div class="col-xs-12">
+			         <form class="form-horizontal" th:action="@{${api}}" method="post">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">帐号名</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="username" th:value="${acount}? ${acount.username}"
+                                               class="form-control" id="inputUsername" placeholder=""
+                                               required="required" maxlength="30" />
+                                    </div>
+                                </div>
+                                <div class="form-group" th:if="${acount!=null and currentUser == acount.username}">
+                                    <label for="inputEmail3" class="col-sm-2 control-label" th:text="${acount}?'旧密码':'密码'">密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="password"
+                                               class="form-control" id="inputPassword" placeholder=""
+                                               required="required" maxlength="20"  onfocus="this.type='password'"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" th:if="${acount!=null and currentUser == acount.username}">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">新密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="newPassword"
+                                               class="form-control" id="inputNewPassword" placeholder=""
+                                               required="required" maxlength="20"  onfocus="this.type='password'"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" th:if="${acount!=null and currentUser == acount.username}">
+                                    <label for="inputConfirmPassword" class="col-sm-2 control-label">确认密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="confirmPassword"
+                                               class="form-control" id="inputConfirmPassword" placeholder=""
+                                               required="required" maxlength="20"  onfocus="this.type='password'"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" name="email" th:value="${acount}? ${acount.email}"
+                                               class="form-control" id="inputEmail" placeholder=""
+                                                maxlength="100"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">座机</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="phone" th:value="${acount}? ${acount.phone}"
+                                               class="form-control" id="inputPhone" placeholder=""
+                                                maxlength="100"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">手机</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="mobile" th:value="${acount}? ${acount.mobile}"
+                                               class="form-control" id="inputMobile" placeholder=""
+                                                maxlength="100"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">QQ号码</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="qq" th:value="${acount}? ${acount.qq}"
+                                               class="form-control" id="inputQq" placeholder=""
+                                                maxlength="100"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">部门</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+	                                        <input type="hidden" name="department" th:value="${acount}? ${acount.department}"
+	                                               class="form-control" id="inputDepartment" placeholder=""
+	                                                maxlength="100"/>
+	                                        <input type="text" name="departmentName" th:value="${acount}? ${acount.departName}"
+	                                               class="form-control" id="inputDepartmentName" placeholder="" readonly="readonly"
+	                                                />
+		                                    <span class="input-group-btn">
+											      <button type="button" class="btn btn-primary hidden" onclick="deptSelect();">选择</button>
+											</span>
+										</div>
+                                    </div>
+                                    
+                                </div>
+                                <div id = "resetPasswordDiv" class="form-group" th:if="${acount!=null and currentUser =='root'}">
+                                    <div class="col-md-12">
+									    <div class="form-group">
+									        <label class="col-sm-2 control-label"> </label>
+									        <div class="col-sm-5">
+									            <label class="checkbox-inline">
+									                <input type="checkbox" value="option1" id="resetPassword"/>重置密码</label>
+									        </div>
+									    </div>
+									</div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer" style="text-align: center;">
+                                <button type="submit" class="btn btn-info" onclick="return formSubmit();">提交</button>
+                                <button type="button" class="btn btn-info" id="buttonReturn" onclick="history.go(-1);">返回</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+			</div>
+		</div>
+	</div>
+	<input id="addFlg" type="hidden" th:value="${acount}?1:0"/>
+	<input id="userNameOld" type="hidden" th:value="${acount}? ${acount.username}"/>
+	<input id="currentUser" type="hidden" th:value="${currentUser}"/>
+	<!--加载公共js  -->
+	<div th:replace="script"></div>
+	<script th:src="${basicUrl}+@{js/plugins/jsTree/jstree.min.js}"></script>
+	<script th:src="${basicUrl}+@{js/plugins/jsTree/jstree.checkbox.js}"></script>
+	<script>
+	/*<![CDATA[*/
+	    var parentFunc = function (data){
+			if (data){
+			    $("#inputDepartment").val(data.nodeId);
+			    $("#inputDepartmentName").val(data.nodeText);
+			}
+	    }  
+	    
+
+	    var deptSelect = function(){
+	    	var departMent = $("#inputDepartment").val();
+		    var mydept = Departselector({
+		    	'selected':departMent,
+		    	'parentFunc':parentFunc
+		    })
+		    mydept.open();
+	    }
+ 
+	    var passwordCheck = function(){
+	    	if ($("#addFlg").val()=="0"){//新增用户，不检查密码
+	    		return true;
+	    	}else{//修改用户
+	    		if ($("#userNameOld").val() == $("#currentUser").val()){//用户名等于当前用户,允许修改密码
+	    			if ($("#inputPassword").val() || 
+	    				$("#inputNewPassword").val() ||
+	    				$("#inputConfirmPassword").val()){//用户要修改密码
+			    			if ($("#inputPassword").val() == $("#inputNewPassword").val()){//新旧密码应不同
+			    				layer.alert("新旧密码应不同！", {
+									icon : 2,
+									title : '出错了！',
+									skin : 'layer-ext-moon'
+								});
+			    				return false;
+			    			}
+			    			if (!($("#inputConfirmPassword").val() == $("#inputNewPassword").val())){//新旧密码应不同
+			    				layer.alert("新密码和确认密码应相同！", {
+									icon : 2,
+									title : '出错了！',
+									skin : 'layer-ext-moon'
+								});
+			    				return false;
+			    			}
+	    			}
+	    			return true;
+	    		}else{//用户名不等于当前用户,不允许修改密码
+	    			return true;
+	    		}
+	    	}
+	    }
+		var formSubmit = function(){
+             var tabTitle = $(".active.J_menuTab", window.parent.document).html();
+	    	if (passwordCheck()==false){
+	    		return false;
+	    	}
+			if (0 == $("#addFlg").val() || tabTitle.indexOf("用户管理") != -1){
+				return true;
+			}
+	    	
+	    	var urlStr = $("form").attr("action")+"/ajax";
+		    var postData = {};
+		    postData.username = $("#inputUsername").val();
+		    if (	$("#userNameOld").val() == $("#currentUser").val() &&
+		    		($("#inputPassword").val() || 
+		    				$("#inputNewPassword").val() ||
+		    				$("#inputConfirmPassword").val())
+		          ){
+			    postData.password = $("#inputPassword").val();
+			    postData.newPassword = $("#inputNewPassword").val();
+			    postData.confirmPassword = $("#inputConfirmPassword").val();
+		    }
+		    postData.email = $("#inputEmail").val();
+		    postData.phone = $("#inputPhone").val();
+		    postData.mobile = $("#inputMobile").val();
+		    postData.qq = $("#inputQq").val();
+		    postData.department = $("#inputDepartment").val();
+		    $.ajax({
+				type : "post",
+				data : postData,
+				url : urlStr,
+				dataType: "json",
+				success : function(data) {
+					if (data.resultFlg=="success"){
+						var msg = "修改成功！";
+						layer.msg(msg, {
+							icon : 1,
+							title : '成功了！',
+							skin : 'layer-ext-moon'
+						});
+						$("#inputPassword").val("");
+	    				$("#inputNewPassword").val("");
+	    				$("#inputConfirmPassword").val("");
+					}else{
+						layer.alert("修改失败！"+data.errorMsg, {
+							icon : 2,
+							title : '出错了！',
+							skin : 'layer-ext-moon'
+						});
+					}
+				}
+			});
+		    return false;
+	    }
+
+		$(function() {//打开页面执行的方法
+			var his = document.referrer; 
+	    	if (his.indexOf("/user") >0 ){
+	    	}else{
+	    		$("#buttonReturn").hide();
+	    		$("#resetPasswordDiv").remove()
+	    	}
+		});
+		/*]]>*/
+	</script>
+
+</body>
+</html>

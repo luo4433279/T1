@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>不迷失-Admin 新增cki</title>
+    <div th:replace="head"></div>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini ">
+<div class="wrapper">
+
+    <div th:replace="header"></div>
+    <div th:replace="sidebar"></div>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Horizontal Form -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" ><span th:text="${title}"></span></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" th:action="@{${api}}" method="post">
+                            <input type="hidden" name="id" id="id" th:value="${id}" />
+                            <input type="hidden" name="url" id="url" th:value="${api}" />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">上传文件:</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" name="path" class="form-control" id="path" placeholder=""
+                                               required="required" maxlength="225"/>
+                                    </div>
+                                </div>
+                          </div>     
+                            <!-- /.box-body -->
+                            <div class="box-footer" style="text-align: center;">
+
+                                <button type="button" class="btn btn-info" onclick="upload()">开始上传</button>
+                                <button type="button" class="btn btn-info" onclick="history.go(-1)">返回</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <div th:replace="footer"></div>
+</div>
+<!-- ./wrapper -->
+<div th:replace="script"></div>
+<script>
+function upload(){
+	  var id=$("#id").val();
+	  var url=$("#url").val();
+	  var path=$("#path").val();
+	  if(path.length>0){
+		  $.ajax({  
+		        url:url,  
+			      data:{"id":id,"path":path},
+			      dataType:'json',
+		        type: 'POST' ,
+		        success:function(data){
+		      	var msg=data.json.msg;
+		      	var url=data.json.url;
+		      	layer.confirm(msg, {
+		      	  btn: ['确定'] //按钮
+		      	}, function(){
+		      		 window.location.href=url;
+// 		      	  layer.msg('的确很重要', {icon: 1});
+		      	}, function(){
+		      	  layer.msg('也可以这样', {
+		      	    time: 20000, //20s后自动关闭
+		      	    btn: ['明白了', '知道了']
+		      	  });
+		      	});
+// 		      	layer.confirm({
+// 		      	    msg: msg,
+// 		      	    callback: function ($this, type, ev) {
+// 		      	    }
+// 		      	}); 
+		        }
+		    }); 
+		 
+	  }else{
+  	    	layer.alert('请选择上传文件！', {
+					  icon: 2,
+					  title: '出错了！',
+					  skin: 'layer-ext-moon' 
+					});
+  	    	return;
+      }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>不迷失-Admin 新增cki</title>
+    <div th:replace="head"></div>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini ">
+<div class="wrapper">
+
+    <div th:replace="header"></div>
+    <div th:replace="sidebar"></div>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Horizontal Form -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" ><span th:text="${title}"></span></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <form class="form-horizontal" th:action="@{${api}}" method="post">
+                            <input type="hidden" name="id" th:value="${deploy}? ${deploy.id}" />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">ip:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="ip" th:value="${deploy}? ${deploy.ip}"
+                                               th:readonly="${deploy}?true:false" class="form-control" id="inputEmail3"
+                                               placeholder=""
+                                               required="required" maxlength="50"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">登录名:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="username" th:value="${deploy}? ${deploy.username}"
+                                               class="form-control" id="inputEmail3" placeholder=""
+                                               required="required" maxlength="30"/>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group">-->
+                                <!--<label for="inputEmail3" class="col-sm-2 control-label">类型</label>-->
+
+                                <!--<div class="col-sm-10">-->
+                                <!--<input type="text" name="type" class="form-control" id="inputEmail3" placeholder=""-->
+                                <!--required="required">-->
+                                <!--</div>-->
+                                <!--</div>-->
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">登录密码：</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" name="password" th:value="${deploy}? ${deploy.password}"
+                                               class="form-control" id="inputEmail3" placeholder=""
+                                               required="required" maxlength="225"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">端口：</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" name="port" th:value="${deploy}? ${deploy.port}"
+                                               class="form-control" id="inputEmail3" placeholder=""
+                                               required="required" maxlength="225"/>
+<!--                                         <input type="number" name="order" th:value="${deploy}? ${deploy.order} : 10" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                         /> -->
+<!--                                         <input type="hidden" name="path" -->
+<!--                                                th:value="${deploy}? ${deploy.path} : (${parentPath} ? ${parentPath} :0)"/> -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">发布类型：</label>
+
+                                    <div class="col-sm-10">
+                                       <select name="ipType" class="form-control" >
+                                            <option value="1">预发布</option>
+                                            <option value="0">生产链布</option>
+                                        </select>
+<!--                                       <select class='form-control' name="skill[4].proficiency"> -->
+<!-- 							                <option >掌握程度</option> -->
+<!-- 							                <option th:if="${skill.level eq '一般'}" th:selected="selected">一般</option> -->
+<!-- 							                 <option th:if="${skill.level eq '熟练'}" th:selected="selected">熟练</option> -->
+<!-- 							                 <option th:if="${skill.level eq '精通'}" th:selected="selected">精通</option> -->
+<!-- 							           </select> -->
+<!--                                          <input type="text" name="url" th:value="${deploy}? ${deploy.url}" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                                required="required" maxlength="225"/> -->
+<!--                                         <input type="number" name="order" th:value="${deploy}? ${deploy.order} : 10" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                         /> -->
+<!--                                         <input type="hidden" name="path" -->
+<!--                                                th:value="${deploy}? ${deploy.path} : (${parentPath} ? ${parentPath} :0)"/> -->
+                                    </div>
+                                </div>
+                                 
+                                 <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">连接方式：</label>
+
+                                    <div class="col-sm-10">
+                                        <select name="connectType" class="form-control">
+                                            <option value="1">ssh</option>
+                                            <option value="2">本地连接</option>
+                                        </select>
+<!--                                        <input type="text" name="url" th:value="${deploy}? ${deploy.url}" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                                required="required" maxlength="225"/> -->
+<!--                                         <input type="number" name="order" th:value="${deploy}? ${deploy.order} : 10" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                         /> -->
+<!--                                         <input type="hidden" name="path" -->
+<!--                                                th:value="${deploy}? ${deploy.path} : (${parentPath} ? ${parentPath} :0)"/> -->
+                                    </div>
+                                </div>  
+                                
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">启动命令：</label>
+
+                                    <div class="col-sm-10">
+                                        <textarea style="width: 100%;" rows="5" class="editormd-html-textarea" name="command" th:value="${deploy}? ${deploy.command}"></textarea>      
+<!--                                         <input type="number" name="order" th:value="${deploy}? ${deploy.order} : 10" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                         /> -->
+<!--                                         <input type="hidden" name="path" -->
+<!--                                                th:value="${deploy}? ${deploy.path} : (${parentPath} ? ${parentPath} :0)"/> -->
+                                    </div>
+                                </div>  
+                                
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">war包目录：</label>
+
+                                    <div class="col-sm-10">
+                                       <textarea style="width: 100%;"  rows="5" class="editormd-html-textarea" name="filedirectory"></textarea>    
+<!--                                         <input type="text" name="url" th:value="${deploy}? ${deploy.url}" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                                required="required" maxlength="225"/> -->
+<!--                                         <input type="number" name="order" th:value="${deploy}? ${deploy.order} : 10" -->
+<!--                                                class="form-control" id="inputEmail3" placeholder="" -->
+<!--                                         /> -->
+<!--                                         <input type="hidden" name="path" -->
+<!--                                                th:value="${deploy}? ${deploy.path} : (${parentPath} ? ${parentPath} :0)"/> -->
+                                    </div>
+                                </div>                              
+                                <br/><br/>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer" style="text-align: center;">
+
+                                <button type="submit" class="btn btn-info">Submit</button>
+                                <button type="button" class="btn btn-info" onclick="history.go(-1)">Return</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <div th:replace="footer"></div>
+</div>
+<!-- ./wrapper -->
+<div th:replace="script"></div>
+</body>
+</html>

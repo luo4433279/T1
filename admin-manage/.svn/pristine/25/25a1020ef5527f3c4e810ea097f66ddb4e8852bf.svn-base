@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <title>预览</title>
+    <link rel="stylesheet" href="editormd.css"/>
+
+
+</head>
+<body>
+<div class="editormd-preview" style="display: block;width:90%;">
+    <div class="markdown-body editormd-preview-container" previewcontainer="true" style="padding: 20px;">
+        <pre class="prettyprint linenums prettyprinted"><ol class="linenums"><li class="L0"><code><span class="kwd">package</span><span
+                class="pln"> org</span><span class="pun">.</span><span class="pln">bumishi</span><span
+                class="pun">.</span><span class="pln">admin</span><span class="pun">.</span><span
+                class="pln">interfaces</span><span class="pun">.</span><span class="pln">web</span><span
+                class="pun">;</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="kwd">import</span><span
+                class="pln"> org</span><span class="pun">.</span><span class="pln">apache</span><span
+                class="pun">.</span><span class="pln">commons</span><span class="pun">.</span><span
+                class="pln">lang3</span><span class="pun">.</span><span class="typ">StringUtils</span><span class="pun">;</span></code></li><li
+                class="L3"><code><span class="kwd">import</span><span class="pln"> org</span><span
+                class="pun">.</span><span class="pln">bumishi</span><span class="pun">.</span><span
+                class="pln">admin</span><span class="pun">.</span><span class="pln">interfaces</span><span
+                class="pun">.</span><span class="pln">command</span><span class="pun">.</span><span class="typ">AddBlogCommand</span><span
+                class="pun">;</span></code></li><li class="L4"><code><span class="kwd">import</span><span class="pln"> org</span><span
+                class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">stereotype</span><span
+                class="pun">.</span><span class="typ">Controller</span><span class="pun">;</span></code></li><li
+                class="L5"><code><span class="kwd">import</span><span class="pln"> org</span><span
+                class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">ui</span><span
+                class="pun">.</span><span class="typ">Model</span><span class="pun">;</span></code></li><li
+                class="L6"><code><span class="kwd">import</span><span class="pln"> org</span><span
+                class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">web</span><span
+                class="pun">.</span><span class="pln">bind</span><span class="pun">.</span><span
+                class="pln">annotation</span><span class="pun">.*;</span></code></li><li class="L7"><code></code></li><li
+                class="L8"><code><span class="com">/**</span></code></li><li class="L9"><code><span class="com"> * @author qiang.xie</span></code></li><li
+                class="L0"><code><span class="com"> * @date 2016/12/7</span></code></li><li class="L1"><code><span
+                class="com"> */</span></code></li><li class="L2"><code><span class="lit">@Controller</span></code></li><li
+                class="L3"><code><span class="lit">@RequestMapping</span><span class="pun">(</span><span class="str">"/blog"</span><span
+                class="pun">)</span></code></li><li class="L4"><code><span class="kwd">public</span><span
+                class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">BlogController</span><span
+                class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code></code></li><li
+                class="L6"><code></code></li><li class="L7"><code></code></li><li class="L8"><code><span
+                class="pln">    </span><span class="lit">@RequestMapping</span><span class="pun">(</span><span
+                class="pln">method </span><span class="pun">=</span><span class="pln"> </span><span class="typ">RequestMethod</span><span
+                class="pun">.</span><span class="pln">POST</span><span class="pun">,</span><span
+                class="pln">value </span><span class="pun">=</span><span class="pln"> </span><span
+                class="str">"/add"</span><span class="pun">)</span></code></li><li class="L9"><code><span
+                class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span
+                class="typ">String</span><span class="pln"> create</span><span class="pun">(</span><span class="typ">AddBlogCommand</span><span
+                class="pln"> command</span><span class="pun">){</span></code></li><li class="L0"><code></code></li><li
+                class="L1"><code><span class="pln">        </span><span class="kwd">return</span><span
+                class="pln"> </span><span class="str">"redirect:/blog"</span><span class="pun">;</span></code></li><li
+                class="L2"><code><span class="pln">    </span><span class="pun">}</span></code></li><li
+                class="L3"><code></code></li><li class="L4"><code><span class="pln">    </span><span class="lit">@RequestMapping</span><span
+                class="pun">(</span><span class="pln">value </span><span class="pun">=</span><span
+                class="pln"> </span><span class="str">"/{id}/modify"</span><span class="pun">,</span><span class="pln"> method </span><span
+                class="pun">=</span><span class="pln"> </span><span class="typ">RequestMethod</span><span
+                class="pun">.</span><span class="pln">POST</span><span class="pun">)</span></code></li><li
+                class="L5"><code><span class="pln">    </span><span class="kwd">public</span><span
+                class="pln"> </span><span class="typ">String</span><span class="pln"> modify</span><span
+                class="pun">(</span><span class="lit">@PathVariable</span><span class="pun">(</span><span class="str">"id"</span><span
+                class="pun">)</span><span class="pln"> </span><span cl…<span class="lit">@RequestMapping</span><span
+                class="pun">(</span><span class="pln">value </span><span class="pun">=</span><span
+                class="pln"> </span><span class="str">"/{id}/delete"</span><span class="pun">,</span><span class="pln">method </span><span
+                class="pun">=</span><span class="pln"> </span><span class="typ">RequestMethod</span><span
+                class="pun">.</span><span class="pln">DELETE</span><span class="pun">)</span></code></li><li class="L4"><code><span
+                class="pln">    </span><span class="lit">@ResponseBody</span></code></li><li class="L5"><code><span
+                class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span
+                class="kwd">void</span><span class="pln"> </span><span class="kwd">delete</span><span
+                class="pun">(</span><span class="lit">@PathVariable</span><span class="pun">(</span><span class="str">"id"</span><span
+                class="pun">)</span><span class="typ">String</span><span class="pln"> id</span><span
+                class="pun">){</span></code></li><li class="L6"><code><span class="pln">    </span><span
+                class="pun">}</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span
+                class="pln">    </span><span class="lit">@RequestMapping</span><span class="pun">(</span><span
+                class="pln">value </span><span class="pun">=</span><span class="pln"> </span><span
+                class="str">"/form"</span><span class="pun">,</span><span class="pln">method </span><span
+                class="pun">=</span><span class="pln"> </span><span class="typ">RequestMethod</span><span
+                class="pun">.</span><span class="pln">GET</span><span class="pun">)</span></code></li><li
+                class="L9"><code><span class="pln">    </span><span class="kwd">public</span><span
+                class="pln"> </span><span class="typ">String</span><span class="pln"> toform</span><span
+                class="pun">(</span><span class="lit">@RequestParam</span><span class="pun">(</span><span class="pln">value </span><span
+                class="pun">=</span><span class="pln"> </span><span class="str">"id"</span><span
+                class="pun">,</span><span class="pln">required </span><span class="pun">=</span><span
+                class="pln"> </span><span class="kwd">false</span><span class="pun">)</span><span
+                class="typ">String</span><span class="pln"> id</span><span class="pun">,</span><span
+                class="pln"> </span><span class="typ">Model</span><span class="pln"> model</span><span
+                class="pun">){</span></code></li><li class="L0"><code><span class="pln">        </span><span
+                class="typ">String</span><span class="pln"> api</span><span class="pun">=</span><span class="str">"/blog/add"</span><span
+                class="pun">;</span></code></li><li class="L1"><code><span class="pln">        </span><span class="kwd">if</span><span
+                class="pun">(</span><span class="typ">StringUtils</span><span class="pun">.</span><span class="pln">isNotBlank</span><span
+                class="pun">(</span><span class="pln">id</span><span class="pun">)){</span></code></li><li
+                class="L2"><code></code></li><li class="L3"><code><span class="pln">            api</span><span
+                class="pun">=</span><span class="str">"/blog/"</span><span class="pun">+</span><span
+                class="pln">id</span><span class="pun">+</span><span class="str">"/modify"</span><span
+                class="pun">;</span></code></li><li class="L4"><code><span class="pln">        </span><span class="pun">}</span></code></li><li
+                class="L5"><code><span class="pln">        model</span><span class="pun">.</span><span class="pln">addAttribute</span><span
+                class="pun">(</span><span class="str">"api"</span><span class="pun">,</span><span class="pln">api</span><span
+                class="pun">);</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span
+                class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"blog/form"</span><span
+                class="pun">;</span></code></li><li class="L8"><code><span class="pln">    </span><span
+                class="pun">}</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span
+                class="pln">    </span><span class="lit">@RequestMapping</span><span class="pun">(</span><span
+                class="pln">method </span><span class="pun">=</span><span class="pln"> </span><span class="typ">RequestMethod</span><span
+                class="pun">.</span><span class="pln">GET</span><span class="pun">)</span></code></li><li
+                class="L1"><code><span class="pln">    </span><span class="kwd">public</span><span
+                class="pln"> </span><span class="typ">String</span><span class="pln"> list</span><span
+                class="pun">(</span><span class="typ">Model</span><span class="pln"> model</span><span
+                class="pun">){</span></code></li><li class="L2"><code><span class="pln">        </span><span
+                class="com">//model.addAttribute("list",blogService.list());</span></code></li><li
+                class="L3"><code><span class="pln">        </span><span class="kwd">return</span><span
+                class="pln"> </span><span class="str">"blog/list"</span><span class="pun">;</span></code></li><li
+                class="L4"><code><span class="pln">    </span><span class="pun">}</span></code></li><li
+                class="L5"><code></code></li><li class="L6"><code></code></li><li class="L7"><code><span
+                class="pun">}</span></code></li></ol></pre>
+
+    </div>
+</div>
+</body>
+</html>

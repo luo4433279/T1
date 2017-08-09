@@ -1,0 +1,32 @@
+<!-- jQuery 2.2.3 -->
+<script th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/plugins/fastclick/fastclick.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/app.min.js}"></script>
+<!-- Sparkline -->
+<!-- SlimScroll 1.3.0 -->
+<script th:src="@{/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
+
+<!-- DataTables -->
+<script th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/plugins/datatables/dataTables.bootstrap.js}"></script>
+
+<script th:src="@{/plugins/datepicker/bootstrap-datetimepicker.js}"></script>
+<script th:src="@{/plugins/datepicker/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/validator/bootstrapValidator.js}"></script>
+<!-- iCheck -->
+<script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
+<script>
+    $(function () {
+    	$.ajaxSetup({headers:{'X-CSRF-TOKEN':$("#csrf_token").attr("content")}});
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
+</script>

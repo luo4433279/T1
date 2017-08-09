@@ -1,0 +1,44 @@
+.buddyRichInfo {
+    background-color: #FFFFFF;
+    border: 1px solid lightGrey;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 3px 3px #DDDDDD;
+    color: #000000;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 350px;
+    z-index: 1000;
+}
+.buddyRichInfo .header {
+    background-color: #EEEEEE;
+    font-weight: bold;
+    padding: 3px 15px;
+}
+.buddyRichInfo .line {
+    padding: 2px 0;
+}
+.buddyRichInfo .infoArea{
+    border-top: 1px solid lightGrey;
+    padding: 3px 15px;
+}
+.buddyRichInfo .buddyRichContent .remarkArea span, .buddyRichInfo .buddyRichContent .nickName, .buddyRichInfo .buddyRichContent .remarkName {
+    display: inline-block;
+    height: 23px;
+    margin: 0;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+.buddyRichInfo .buddyRichContent .group {
+    width: 180px;
+}
+.buddyRichInfo .remarkName {
+    display: inline-block;
+    max-width: 100px;
+}
+.buddyRichInfo .brackets {
+    display: inline-block;
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="basicUrl=@{/}">
+<head>
+<!--¼ÓÔØ¹«¹²css  -->
+<div th:replace="head"></div>
+<!-- DataTables -->
+<link rel="stylesheet"
+	th:href="${basicUrl}+@{js/plugins/datatables/dataTables.bootstrap.css}" />
+</head>
+ <body>
+ 	<h1 th:text="${list}"></h1>
+ 	<div>
+ 		
+ 	</div>
+</body>
+</html>

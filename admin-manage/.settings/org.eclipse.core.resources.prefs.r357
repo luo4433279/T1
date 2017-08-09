@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//src/main/resources/public/thymeleaf=UTF-8
+encoding//src/main/resources/public/thymeleaf/footer.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/header.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/menu/form.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/menu/list.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/newsite/index.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/resource/form.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/role=UTF-8
+encoding//src/main/resources/public/thymeleaf/role/form.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/role/grant-menu.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/role/grant-resource.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/user/form.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/user/grant-role.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/user/list.html=UTF-8
+encoding//src/main/resources/public/thymeleaf/user/profile.html=UTF-8
+encoding/<project>=UTF-8

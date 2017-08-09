@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="basicUrl=@{/}">
+<head>
+<div th:replace="head"></div>
+<link rel="stylesheet" th:href="${basicUrl}+@{js/plugins/datatables/dataTables.bootstrap.css}" />
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+	    <!--你的内容，多行用多个row  -->
+		<div class="row">
+			<div class="col-xs-12">
+			                    <div class="box">
+                        <form class="form-horizontal" th:action="@{${api}}" method="post">
+                            <div class="box-body">
+
+                                <table id="dataTable" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th class="unsortable">&nbsp;</th>
+                                        <th>角色名称</th>
+                                        <th>描述</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="item:${list}"  th:class="${item.checked}?'selected'">
+                                        <td>
+                                            <input type="checkbox" th:checked="${item.checked}" th:name="rid" th:value="${item.rid}" onchange="checkClick(this);"/></td>
+                                        <td th:text="${item.name}">角色名称</td>
+                                        <td th:text="${item.description}">角色名称</td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <br/><br/>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer" style="text-align: center;">
+                                <button type="button" id="submitBtn" class="btn btn-info">提交</button>
+                                <button type="button" class="btn btn-info" onclick="history.go(-1)">返回</button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                        <!-- /.box-body -->
+                    </div>
+			</div>
+		</div>
+	</div>
+	<!--加载公共js  -->
+	<div th:replace="script"></div>
+	
+
+	<script>
+	    var checkClick = function(ojb){
+	    	$(ojb).closest("tr").toggleClass('selected');
+	    }
+		$(function() {//打开页面执行的方法
+	        $('#dataTable').DataTable({
+	            "paging": true,
+	            "lengthChange": false,
+	            "searching": false,
+	            "ordering": true,
+	            "info": true,
+	            "autoWidth": false,
+	            "aoColumnDefs" : [{ "bSortable": false, "aTargets": ['unsortable'] }],
+				"oLanguage" : {
+					"sProcessing" : "正在加载中......",
+					"sLengthMenu" : "每页显示 _MENU_ 条记录",
+					"sZeroRecords" : "对不起，查询不到相关数据！",
+					"sEmptyTable" : "表中无数据存在！",
+					"sInfo" : "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+					"sInfoFiltered" : "数据表中共为 _MAX_ 条记录",
+					"sInfoEmpty" : "当前显示 0 到 0 条，共 0 条记录",
+					"sSearch" : "搜索",
+					"oPaginate" : {
+						"sFirst" : "首页",
+						"sPrevious" : "上一页",
+						"sNext" : "下一页",
+						"sLast" : "末页"
+					}
+				}
+			//多语言配置 
+	        });
+		
+	        /*<![CDATA[*/
+			$("#submitBtn").click(function(){
+				   var urlStr = $("form").attr("action");
+				   
+			       var data=$('#dataTable').DataTable().rows('.selected').data();
+			       var rids = [];
+			       for(var i=0;i<data.length;i++){
+			    	   rids.push($(data[i][0]).val()); 
+			       }
+			       var postData = {};
+			       postData.rid = rids;
+			       $.ajax({
+						type : "post",
+						data : postData,
+						url : urlStr,
+						dataType: "html",
+						success : function(data) {
+							if (data=="ok"){
+								layer.msg("修改成功！", {
+									icon : 1,
+									title : '成功了！',
+									skin : 'layer-ext-moon'
+								});
+							}else{
+								layer.alert("修改失败！", {
+									icon : 2,
+									title : '出错了！',
+									skin : 'layer-ext-moon'
+								});
+							}
+						}
+				});
+			    
+			  });
+			/*]]>*/
+		});
+	</script>
+    <script th:src="${basicUrl}+@{js/list-page.js}"></script>
+    	<!-- DataTables -->
+	<script th:src="${basicUrl}+@{js/plugins/datatables/jquery.dataTables.js}"></script>
+	<script th:src="${basicUrl}+@{js/plugins/datatables/dataTables.bootstrap.js}"></script>
+</body>
+</html>

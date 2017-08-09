@@ -1,0 +1,558 @@
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" /> 
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" /> 
+  <meta content="网上商店系统(JSHOP) 个性化的网店系统 通用的个人网店系统" name="description" /> 
+  <meta content="网上商店系统(JSHOP) 个性化的网店系统 通用的个人网店系统" name="keywords" /> 
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" /> 
+  <title>JSHOP - JAVA开源电商系统</title> 
+  <link href="http://localhost:8080resource/images/favicon.png" type="image/x-icon" rel="shortcut icon" /> 
+  <link type="text/css" href="resource/bootstrap3.3.4/css/bootstrap.min.css" rel="stylesheet" /> 
+  <script src="resource/js/jquery-1.9.1.min.js" type="text/javascript"></script> 
+  <script src="resource/bootstrap3.3.4/js/bootstrap.min.js" type="text/javascript"></script> 
+  <!-- sb admin --> 
+  <link href="resource/sb-admin/css/sb-admin-2.css" rel="stylesheet" /> 
+  <script src="resource/sb-admin/js/sb-admin-2.js"></script> 
+  <link type="text/css" rel="stylesheet" href="resource/font-awesome/css/font-awesome.min.css" /> 
+  <!-- metisMenu --> 
+  <link rel="stylesheet" href="resource/metisMenu/metisMenu.min.css" /> 
+  <script src="resource/metisMenu/metisMenu.min.js"></script> 
+  <script>
+    $(function(){
+        $('#side-menu').metisMenu();
+        $("a.menu-item").each(function(){
+            var href = $(this).data("href");
+            $(this).attr("href", href==""?"#":basepath + href);
+        })
+        var parent = $("a.menu-item.active").parent().parent();
+        if(parent.is("ul.nav")){
+            parent.addClass("in").parent().addClass("active");
+        }
+    });
+</script> 
+ </head> 
+ <body> 
+  <div id="wrapper"> 
+   <!-- Navigation --> 
+   <nav style="margin-bottom: 0" role="navigation" class="navbar navbar-default navbar-static-top"> 
+    <div class="navbar-header"> 
+     <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> 
+     <a href="/jshop/manage/user/home" class="navbar-brand">JSHOP --- 后台管理系统</a> 
+    </div> 
+    <!-- /.navbar-header --> 
+    <!-- /.navbar-collapse --> 
+    <ul class="nav navbar-top-links navbar-right"> 
+     <li><a target="_blank" href="http://localhost:8080/jshop"><i class="glyphicon glyphicon-globe"></i> 访问站点</a></li> 
+     <li class="dropdown"> <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <i class="fa fa-user fa-fw"></i> 超级管理员 <i class="fa fa-caret-down"></i> </a> 
+      <ul class="dropdown-menu dropdown-user"> 
+       <li><a target="_blank" href="/jshop/manage/user/show?account=admin"><i class="fa fa-user fa-fw"></i> 用户信息</a> </li> 
+       <li><a href="/jshop/manage/user/toChangePwd"><i class="fa fa-gear fa-fw"></i> 修改密码</a> </li> 
+       <li class="divider"></li> 
+       <li><a href="/jshop/manage/user/logout"><i class="fa fa-sign-out fa-fw"></i> 注销</a> </li> 
+      </ul> 
+      <!-- /.dropdown-user --> </li> 
+     <!-- /.dropdown --> 
+    </ul> 
+    <div role="navigation" class="navbar-default sidebar"> 
+     <div class="sidebar-nav navbar-collapse"> 
+      <!-- /.navbar-top-links --> 
+      <ul id="side-menu" class="nav"> 
+       <li style="margin-top: 10px;" class="sidebar-search"> 
+        <!-- /input-group --> </li> 
+       <li> <a class="menu-item " data-href="/manage/user/initManageIndex" id="item_0_57" href="/jshop/manage/user/initManageIndex"><i class="fa fa-folder fa-fw"></i> 首页</a> </li> 
+       <li class="active"> <a class="menu-item " data-href="" id="item_0_11" href="#"><i class="fa fa-folder fa-fw"></i> 商品管理<span class="fa arrow"></span></a> 
+        <ul class="nav nav-second-level collapse in"> 
+         <li> <a class="menu-item active" data-href="/manage/catalog/selectList?init=y&amp;type=p" id="item_11_65" href="/jshop/manage/catalog/selectList?init=y&amp;type=p"><i class="fa fa-files-o fa-fw"></i> 商品目录</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/gift/selectList?init=y" id="item_11_93" href="/jshop/manage/gift/selectList?init=y"><i class="fa fa-files-o fa-fw"></i> 赠品管理</a> </li> 
+        </ul> </li> 
+       <li> <a class="menu-item " data-href="" id="item_0_1" href="#"><i class="fa fa-folder fa-fw"></i> 系统管理<span class="fa arrow"></span></a> 
+        <ul class="nav nav-second-level collapse"> 
+         <li> <a class="menu-item " data-href="/manage/user/selectList?init=y" id="item_1_3" href="/jshop/manage/user/selectList?init=y"><i class="fa fa-files-o fa-fw"></i> 用户管理</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/role/selectList?init=y" id="item_1_4" href="/jshop/manage/role/selectList?init=y"><i class="fa fa-files-o fa-fw"></i> 角色管理</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/menu/selectList?init=y" id="item_1_2" href="/jshop/manage/menu/selectList?init=y"><i class="fa fa-files-o fa-fw"></i> 资源管理</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/user/toChangePwd" id="item_1_5" href="/jshop/manage/user/toChangePwd"><i class="fa fa-files-o fa-fw"></i> 修改密码</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/area/areaTree" id="item_1_48" href="/jshop/manage/area/areaTree"><i class="fa fa-files-o fa-fw"></i> 区域管理</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/express/selectList?init=y" id="item_1_38" href="/jshop/manage/express/selectList?init=y"><i class="fa fa-files-o fa-fw"></i> 配送方式</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/systemlog/selectList?init=y" id="item_1_36" href="/jshop/manage/systemlog/selectList?init=y"><i class="fa fa-files-o fa-fw"></i> 日志管理</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/systemSetting/toEdit?init=y" id="item_1_49" href="/jshop/manage/systemSetting/toEdit?init=y"><i class="fa fa-files-o fa-fw"></i> 系统设置</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/keyvalue/selectList?init=y" id="item_1_51" href="/jshop/manage/keyvalue/selectList?init=y"><i class="fa fa-files-o fa-fw"></i> 键值对管理</a> </li> 
+         <li> <a class="menu-item " data-href="/manage/cache/cache.jsp" id="item_1_69" href="/jshop/manage/cache/cache.jsp"><i class="fa fa-files-o fa-fw"></i> 缓存管理</a> </li> 
+        </ul> </li> 
+      </ul> 
+     </div> 
+     <!-- /.sidebar-collapse --> 
+    </div> 
+    <!-- /.navbar-static-side --> 
+   </nav> 
+   <div id="page-wrapper" style="min-height: 248px;"> 
+    <div class="row"> 
+     <div class="col-lg-12"> 
+      <div class="navbar navbar-default"> 
+       <ol class="breadcrumb bootstrap-admin-breadcrumb"> 
+        <li> <a href="/jshop/manage/user/home">首页</a> </li> 
+        <li class="active">商品目录</li> 
+       </ol> 
+      </div> 
+     </div> 
+    </div> 
+    <!-- /.row --> 
+    <div class="row"> 
+     <div class="col-lg-12"> 
+     </div> 
+     <div class="col-lg-12"> 
+      <form theme="simple" method="post" id="form" name="form" action="/jshop/manage/catalog"> 
+       <input type="hidden" id="_type" name="type" value="p" /> 
+       <table class="table table-bordered table-condensed table-hover"> 
+        <tbody>
+         <tr> 
+          <td colspan="16"> <a class="btn btn-primary" href="selectList"> <i class="icon-search icon-white"></i> 查询 </a> <a class="btn btn-success" href="toAdd?type=p"> <i class="icon-plus-sign icon-white"></i> 添加 </a> 
+           <!-- 					<input type="button" onclick="editSelect();" value="编辑" class="btn btn-warning" /> --> 
+           <!-- 					<input type="button" onclick="deleteSelect();" value="删除" class="btn btn-danger" /> --> 
+           <!-- 						<i class="icon-remove-sign icon-white"></i> 删除 --> </td> 
+         </tr> 
+        </tbody>
+       </table> 
+      </form> 
+      <div style="margin-bottom: 2px;" class="alert alert-info">
+       友情提示：商品目录一般分为两层，大类别、小类别。商品目录编码必须唯一。
+      </div> 
+      <table style="min-width:800px;min-height:250px" class="table tree table-bordered" title="商品类别目录" id="treegrid"> 
+       <thead> 
+        <tr> 
+         <th nowrap="nowrap" data-options="field:'id'">ID</th> 
+         <th nowrap="nowrap" data-options="field:'name'">类别名称</th> 
+         <th nowrap="nowrap" data-options="field:'order1'">顺序</th> 
+         <th nowrap="nowrap" data-options="field:'code'">编码</th> 
+         <th nowrap="nowrap" data-options="field:'showInNavStr'">是否在导航条显示</th> 
+         <th align="right" nowrap="nowrap" data-options="field:'productNum'">商品数量</th> 
+         <th align="right" nowrap="nowrap">操作</th> 
+        </tr> 
+        <tr class="treegrid-20 treegrid-expanded"> 
+         <td>20</td> 
+         <td><span class="treegrid-expander glyphicon glyphicon-chevron-down"></span>图书</td> 
+         <td>1</td> 
+         <td>tushu</td> 
+         <td>是</td> 
+         <td>2</td> 
+         <td> <button onclick="return editSelect('20');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('20');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-28 treegrid-parent-20"> 
+         <td>28</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>电子书</td> 
+         <td>1</td> 
+         <td>dianzishu</td> 
+         <td>否</td> 
+         <td>6</td> 
+         <td> <button onclick="return editSelect('28');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('28');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-60 treegrid-parent-20"> 
+         <td>60</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>小说</td> 
+         <td>1</td> 
+         <td>xiaoshuo</td> 
+         <td>否</td> 
+         <td>21</td> 
+         <td> <button onclick="return editSelect('60');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('60');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-61 treegrid-parent-20"> 
+         <td>61</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>育儿书</td> 
+         <td>3</td> 
+         <td>yuershu</td> 
+         <td>否</td> 
+         <td>1</td> 
+         <td> <button onclick="return editSelect('61');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('61');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-77 treegrid-parent-20"> 
+         <td>77</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>程序设计</td> 
+         <td>4</td> 
+         <td>chengxu</td> 
+         <td>否</td> 
+         <td>1</td> 
+         <td> <button onclick="return editSelect('77');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('77');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-88 treegrid-parent-20"> 
+         <td>88</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>战略管理</td> 
+         <td>6</td> 
+         <td>zhanlue</td> 
+         <td>否</td> 
+         <td>6</td> 
+         <td> <button onclick="return editSelect('88');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('88');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-21 treegrid-expanded"> 
+         <td>21</td> 
+         <td><span class="treegrid-expander glyphicon glyphicon-chevron-down"></span>男装</td> 
+         <td>2</td> 
+         <td>nanzhuang</td> 
+         <td>是</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('21');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('21');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-30 treegrid-parent-21"> 
+         <td>30</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>西服</td> 
+         <td>1</td> 
+         <td>xifu</td> 
+         <td>否</td> 
+         <td>1</td> 
+         <td> <button onclick="return editSelect('30');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('30');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-29 treegrid-parent-21"> 
+         <td>29</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>鞋子</td> 
+         <td>3</td> 
+         <td>xiezi</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('29');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('29');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-31 treegrid-parent-21"> 
+         <td>31</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>秋衣</td> 
+         <td>3</td> 
+         <td>qiuyi</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('31');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('31');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-71 treegrid-parent-21"> 
+         <td>71</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>牛仔裤</td> 
+         <td>4</td> 
+         <td>niuzaiku</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('71');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('71');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-72 treegrid-parent-21"> 
+         <td>72</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>西装裤</td> 
+         <td>5</td> 
+         <td>xizhuangku</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('72');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('72');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-73 treegrid-parent-21"> 
+         <td>73</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>工装裤</td> 
+         <td>6</td> 
+         <td>gongzhuangku</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('73');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('73');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-23 treegrid-expanded"> 
+         <td>23</td> 
+         <td><span class="treegrid-expander glyphicon glyphicon-chevron-down"></span>女装</td> 
+         <td>3</td> 
+         <td>nvzhuang</td> 
+         <td>是</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('23');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('23');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-83 treegrid-parent-23"> 
+         <td>83</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>毛呢外套</td> 
+         <td>0</td> 
+         <td>maoniwaitao</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('83');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('83');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-84 treegrid-parent-23"> 
+         <td>84</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>衬衫</td> 
+         <td>0</td> 
+         <td>chenshan</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('84');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('84');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-85 treegrid-parent-23"> 
+         <td>85</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>羽绒服</td> 
+         <td>0</td> 
+         <td>yurongfu</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('85');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('85');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-87 treegrid-parent-23"> 
+         <td>87</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>牛仔裤</td> 
+         <td>0</td> 
+         <td>niuzaikunv</td> 
+         <td>否</td> 
+         <td>1</td> 
+         <td> <button onclick="return editSelect('87');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('87');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-32 treegrid-parent-23"> 
+         <td>32</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>裙子</td> 
+         <td>1</td> 
+         <td>qunzi</td> 
+         <td>否</td> 
+         <td>2</td> 
+         <td> <button onclick="return editSelect('32');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('32');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-33 treegrid-parent-23"> 
+         <td>33</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>女鞋</td> 
+         <td>2</td> 
+         <td>nvxie</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('33');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('33');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-63 treegrid-parent-23"> 
+         <td>63</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>女包</td> 
+         <td>3</td> 
+         <td>nvbaobao</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('63');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('63');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-69 treegrid-parent-23"> 
+         <td>69</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>短外套</td> 
+         <td>4</td> 
+         <td>duanwaitao</td> 
+         <td>否</td> 
+         <td>1</td> 
+         <td> <button onclick="return editSelect('69');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('69');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-70 treegrid-parent-23"> 
+         <td>70</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>休闲裤</td> 
+         <td>5</td> 
+         <td>xiuxianku</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('70');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('70');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-25 treegrid-expanded"> 
+         <td>25</td> 
+         <td><span class="treegrid-expander glyphicon glyphicon-chevron-down"></span>电子数码</td> 
+         <td>5</td> 
+         <td>dianzishuma</td> 
+         <td>是</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('25');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('25');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-26 treegrid-parent-25"> 
+         <td>26</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>笔记本</td> 
+         <td>0</td> 
+         <td>bijiben</td> 
+         <td>否</td> 
+         <td>7</td> 
+         <td> <button onclick="return editSelect('26');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('26');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-76 treegrid-parent-25"> 
+         <td>76</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>台式机</td> 
+         <td>1</td> 
+         <td>taishiji</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('76');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('76');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-37 treegrid-parent-25"> 
+         <td>37</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>鼠标</td> 
+         <td>3</td> 
+         <td>shubiao</td> 
+         <td>否</td> 
+         <td>3</td> 
+         <td> <button onclick="return editSelect('37');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('37');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-80 treegrid-parent-25"> 
+         <td>80</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>平板电脑</td> 
+         <td>3</td> 
+         <td>pingban</td> 
+         <td>否</td> 
+         <td>2</td> 
+         <td> <button onclick="return editSelect('80');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('80');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-79 treegrid-parent-25"> 
+         <td>79</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>硬盘</td> 
+         <td>3</td> 
+         <td>yingpan2</td> 
+         <td>否</td> 
+         <td>1</td> 
+         <td> <button onclick="return editSelect('79');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('79');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-65 treegrid-parent-25"> 
+         <td>65</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>相机</td> 
+         <td>5</td> 
+         <td>xiangji</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('65');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('65');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-67 treegrid-parent-25"> 
+         <td>67</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>路由器</td> 
+         <td>7</td> 
+         <td>luyouqi</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('67');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('67');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-75 treegrid-parent-25"> 
+         <td>75</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>红米</td> 
+         <td>10</td> 
+         <td>hongmi</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('75');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('75');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-74 treegrid-parent-25"> 
+         <td>74</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>小米3</td> 
+         <td>10</td> 
+         <td>xiaomi3</td> 
+         <td>否</td> 
+         <td>3</td> 
+         <td> <button onclick="return editSelect('74');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('74');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-82 treegrid-parent-25"> 
+         <td>82</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>手机</td> 
+         <td>10</td> 
+         <td>shouji</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('82');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('82');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-39 treegrid-expanded"> 
+         <td>39</td> 
+         <td><span class="treegrid-expander glyphicon glyphicon-chevron-down"></span>儿童婴儿</td> 
+         <td>6</td> 
+         <td>baby</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('39');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('39');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-40 treegrid-parent-39"> 
+         <td>40</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>儿童书</td> 
+         <td>1</td> 
+         <td>ertongshu</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('40');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('40');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-41 treegrid-parent-39"> 
+         <td>41</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>绘画</td> 
+         <td>2</td> 
+         <td>huihua</td> 
+         <td>否</td> 
+         <td>2</td> 
+         <td> <button onclick="return editSelect('41');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('41');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-64 treegrid-parent-39"> 
+         <td>64</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>儿童玩具</td> 
+         <td>3</td> 
+         <td>wanju</td> 
+         <td>否</td> 
+         <td>4</td> 
+         <td> <button onclick="return editSelect('64');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('64');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-56 treegrid-expanded"> 
+         <td>56</td> 
+         <td><span class="treegrid-expander glyphicon glyphicon-chevron-down"></span>美食吃喝</td> 
+         <td>7</td> 
+         <td>meishi</td> 
+         <td>是</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('56');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('56');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-57 treegrid-parent-56"> 
+         <td>57</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>新鲜水果</td> 
+         <td>1</td> 
+         <td>shuiguo</td> 
+         <td>否</td> 
+         <td>4</td> 
+         <td> <button onclick="return editSelect('57');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('57');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-58 treegrid-parent-56"> 
+         <td>58</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>特产干货</td> 
+         <td>2</td> 
+         <td>dichanganhuo</td> 
+         <td>否</td> 
+         <td>4</td> 
+         <td> <button onclick="return editSelect('58');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('58');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-59 treegrid-parent-56"> 
+         <td>59</td> 
+         <td><span class="treegrid-indent"></span><span class="treegrid-expander"></span>地方菜</td> 
+         <td>3</td> 
+         <td>difangcai</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('59');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('59');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-89 "> 
+         <td>89</td> 
+         <td><span class="treegrid-expander"></span>测试1</td> 
+         <td>20</td> 
+         <td>ceshi1</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('89');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('89');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-90 "> 
+         <td>90</td> 
+         <td><span class="treegrid-expander"></span>测试2</td> 
+         <td>21</td> 
+         <td>ceshi2</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('90');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('90');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-91 "> 
+         <td>91</td> 
+         <td><span class="treegrid-expander"></span>测试3</td> 
+         <td>23</td> 
+         <td>ceshi3</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('91');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('91');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+        <tr class="treegrid-92 "> 
+         <td>92</td> 
+         <td><span class="treegrid-expander"></span>测试4</td> 
+         <td>24</td> 
+         <td>ceshi4</td> 
+         <td>否</td> 
+         <td>0</td> 
+         <td> <button onclick="return editSelect('92');" class="btn btn-warning"> <i class="icon-edit icon-white"></i> 编辑 </button> <button onclick="return deleteSelect('92');" class="btn btn-danger" method="deletes"> <i class="icon-remove-sign icon-white"></i> 删除 </button> </td> 
+        </tr> 
+       </thead> 
+      </table> 
+      <link href="resource/jquery-treegrid/css/jquery.treegrid.css" type="text/css" rel="stylesheet" /> 
+      <script src="resource/jquery-treegrid/jquery.treegrid.js" type="text/javascript"></script> 
+      <script src="resource/jquery-treegrid/jquery.treegrid.bootstrap3.js" type="text/javascript"></script> 
+     </div> 
+     <!-- /.col-lg-12 --> 
+    </div> 
+    <!-- /.row --> 
+   </div> 
+   <!-- /#page-wrapper --> 
+  </div> 
+  <!-- /#wrapper --> 
+ </body>
+</html>
